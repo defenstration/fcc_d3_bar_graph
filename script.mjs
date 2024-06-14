@@ -6,7 +6,7 @@ d3.json(dataUrl)
 
         const cleanedData = data.data
         const margins = {top: 20, right: 20, bottom: 20, left: 20}
-        const width = document.querySelector("body").clientWidth
+        const width = document.querySelector("#graph-wrapper").clientWidth
         const height = 400
 
         const svg = d3.select("#graph-wrapper")
@@ -16,7 +16,7 @@ d3.json(dataUrl)
 
         const xScale = d3.scaleBand()
             .domain(cleanedData.map(d => d[0]))
-            .range([0, width]);
+            .range([0, width - margins.left -  margins.right]);
 
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(cleanedData, d => d[1])])
@@ -24,6 +24,10 @@ d3.json(dataUrl)
 
         let xAxis = d3.axisBottom(xScale)
         let yAxis = d3.axisLeft(yScale)
+
+        xAxis.ticks(20)
+
+        yAxis.ticks(10)
 
         svg.selectAll('rect')
             .data(cleanedData)
@@ -36,11 +40,26 @@ d3.json(dataUrl)
             .attr('height', d => height - yScale(d[1]))
 
         svg.append("g")
-            .attr("transform", `translate(0,${height - margins.bottom})`)
+            .attr
+            .attr("transform", `translate(0,${height})`)
             .call(xAxis)
 
         svg.append("g")
             .call(yAxis)
+
+        svg.append('text')
+            .attr("class", "axis-label")
+            .attr('x', width / 2)
+            .attr('y', height + 40)
+            .text("X Axis Label")
+
+        svg.append('text')
+            .attr("class", "axis-label")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr('x', -height / 2)
+            .attr('y', 10)
+            .text("Y Axis Label")
 
     })    
     .catch(error => {

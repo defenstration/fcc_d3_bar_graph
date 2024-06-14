@@ -1,8 +1,21 @@
 body {
     width: 100vw;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#graph-wrapper {
+    width: 90%;
+
 }
 
 .bar {
     fill: purple;
+}
+
+.axis-label {
+    font-size: 1.5rem;
+    color: orange;
 }
