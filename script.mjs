@@ -3,8 +3,10 @@ const dataUrl = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReference
 // fetch json
 d3.json(dataUrl)
     .then(data => {
+        console.log(data)
 
         const cleanedData = data.data
+        console.log(cleanedData.slice(0, 10))
         const margins = {top: 20, right: 20, bottom: 20, left: 20}
         const width = document.querySelector("#graph-wrapper").clientWidth
         const height = 400
@@ -22,6 +24,7 @@ d3.json(dataUrl)
             .domain([0, d3.max(cleanedData, d => d[1])])
             .range([height, 0]);
 
+
         let xAxis = d3.axisBottom(xScale)
         let yAxis = d3.axisLeft(yScale)
 
@@ -38,13 +41,20 @@ d3.json(dataUrl)
             .attr('y', d => yScale(d[1]))
             .attr('width', xScale.bandwidth())
             .attr('height', d => height - yScale(d[1]))
+            .attr("data-date", (d)=>d[0])
+            .attr("data-gdp", (d)=>d[1])
+            .append("title")
+            .text((d) => d)
+            .attr("id", "tooltip")
+            .attr("data-date", (d)=>d[0])
 
         svg.append("g")
-            .attr
+            .attr("id", "x-axis")
             .attr("transform", `translate(0,${height})`)
             .call(xAxis)
 
         svg.append("g")
+            .attr("id", "y-axis")
             .call(yAxis)
 
         svg.append('text')
@@ -60,6 +70,12 @@ d3.json(dataUrl)
             .attr('x', -height / 2)
             .attr('y', 10)
             .text("Y Axis Label")
+
+        svg.append('text')
+            .attr("id", "title")
+            .attr("x", width / 2)
+            .attr("y", 5 + (margins.top /2))
+            .text("Chart Title")
 
     })    
     .catch(error => {
