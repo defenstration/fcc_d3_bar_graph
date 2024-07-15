@@ -1,21 +1,17 @@
-body {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#graph-wrapper {
-    width: 90%;
-
-}
-
 .bar {
-    fill: purple;
-}
-
-.axis-label {
-    font-size: 1.5rem;
-    color: orange;
-}
+    fill: grey
+  }
+  
+  .bar:hover {
+    fill: blue
+  }
+  
+  #tooltip {
+    display: absolute;
+    opacity: 0;
+    height: 100px;
+    width: 100px;
+    background-color: grey;
+    border: 1px solid black;
+  
+  }
